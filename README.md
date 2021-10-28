@@ -11,5 +11,5 @@ For web scraping and categorization, we will use Python. For frontend, we are us
 Contributors: <br />
 Lenny Meng (lmeng1214@gmail.com) <br />
 Evan Dunning (dunning0@purdue.edu) <br />
-Huy Ahn Bui (bui13@purdue.edu) <br />
+Huy Anh Bui (bui13@purdue.edu) <br />
 John Crawford V (crawfo58@purdue.edu) <br />
