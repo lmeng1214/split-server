@@ -1,6 +1,6 @@
 /node_modules/
 /public/build/
 /config
-/run_sql_proxy.sh
+/run\_sql\_proxy.sh
 
 .DS_Store
