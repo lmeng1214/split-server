@@ -21,6 +21,7 @@
   "homepage": "https://github.com/lmeng1214/split-server#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "knex": "^0.95.12",
     "pg": "^8.7.1"
   },
   "devDependencies": {

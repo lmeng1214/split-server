@@ -5,16 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9061990d-c93e-42ed-a215-6b52e11b276b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/queries.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloud_sql_proxy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/run_sql_proxy.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/app.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/app.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/queries.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/queries.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/queries.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/queries.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/queries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/queries.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +34,10 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/app.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/queries.ts" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="JsBowerSettings">
     <bower-package value="" />
     <bower.json value="" />
@@ -47,6 +53,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -105,7 +112,10 @@
       <workItem from="1635439689968" duration="1565000" />
       <workItem from="1635441310461" duration="498000" />
       <workItem from="1635441851331" duration="406000" />
-      <workItem from="1635442473911" duration="76000" />
+      <workItem from="1635442473911" duration="7961000" />
+      <workItem from="1635462192018" duration="4276000" />
+      <workItem from="1635898786787" duration="1256000" />
+      <workItem from="1635900440000" duration="4261000" />
     </task>
     <servers />
   </component>

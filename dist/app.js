@@ -13,14 +13,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const queries_1 = require("./queries");
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8080;
 app.get('/', (_, res) => {
     res.status(200).send('OK!');
 });
 app.get('/selectAll', (_, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).send('SERVING OK');
-    console.log('Status 200 sent.');
+    console.log('GET /selectAll');
+    res.status(200).send(yield (0, queries_1.getAllArticles)());
 }));
 app.listen(port, () => console.log(`Running at http://localhost:${port}`));
 //# sourceMappingURL=app.js.map
