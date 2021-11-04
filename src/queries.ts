@@ -29,7 +29,23 @@ const createArticlesTable = async () => {
 };
 
 const getAllArticles = async () => {
+  console.log('@query getAllArticles');
   return server.select().table('articles');
 };
 
-export {createArticlesTable, getAllArticles};
+const insertArticle = async (req : any) => {
+  var date = new Date();
+  console.log('@query insertArticle');
+  console.log(req.body)
+  return server('articles').insert({article_id: req.body.article_id, source_id: req.body.topic_id, topic_id: req.body.article_id, title: req.body.title, url: req.body.url, pub_date: date.toISOString()});
+};
+
+const deleteArticle = async (req : any) => {
+  console.log('@query deleteArticle');
+  console.log(req.body)
+  console.log(req.body.article_id)
+  console.log(Number(req.body.article_id))
+  return server('articles').where({article_id: req.body.article_id}).del();
+};
+
+export {createArticlesTable, getAllArticles, insertArticle, deleteArticle};
