@@ -84,13 +84,44 @@ const getUser = async (req : any) => {
   return server.table('accounts').where({account_id: req.body.account_id}).select();
 }
 
+function pick_row (rows : any)
+{
+  if (! rows.length) return null
+  return rows[0];
+}
+
 //Favorite Queries
-// const insertFavorite = async (req : any) => {
-//   console.log('@query insertFavorite');
+const updateFavorite = async (req : any, res : any) => {
+  console.log('@query updateFavorite');
+  console.log(req.body)
+  console.log(req.body.article_id)
+  console.log(req.body.account_id)
+
+  return server('favorites').select('*')
+      .where({article_id: req.body.article_id, account_id: req.body.account_id})
+      .then(pick_row).then(result => {
+        console.log(result)
+        let response;
+        if(result == null) {
+          response = server('favorites').insert({article_id: req.body.article_id, account_id: req.body.account_id});
+          res.send("Inserted")
+        }
+        else {
+          response = server('favorites').where({article_id: req.body.article_id, account_id: req.body.account_id}).del();
+          res.send("Deleted")
+        }
+        return response
+      })
+
+  //return server('favorites').insert({article_id: req.body.article_id, account_id: req.body.account_id});
+};
+
+// const deleteFavorite = async (req : any) => {
+//   console.log('@query deleteFavorite');
 //   console.log(req.body)
 //   console.log(req.body.article_id)
 //   console.log(req.body.account_id)
-//   //return server('accounts').insert({account_id: req.body.account_id});
+//   //return server('favorites').where({article_id: req.body.article_id, account_id: req.body.account_id}).del();
 // };
 
-export {createArticlesTable, createAccountsTable, createFavoritesTable, getAllArticles, insertArticle, deleteArticle, insertUser, getUser};
+export {createArticlesTable, createAccountsTable, createFavoritesTable, getAllArticles, insertArticle, deleteArticle, insertUser, getUser, updateFavorite};

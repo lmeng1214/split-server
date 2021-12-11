@@ -1,5 +1,5 @@
 import express from 'express';
-import {createAccountsTable, createFavoritesTable, getAllArticles, insertArticle, deleteArticle, insertUser, getUser} from './queries';
+import {createAccountsTable, createFavoritesTable, getAllArticles, insertArticle, deleteArticle, insertUser, getUser, updateFavorite} from './queries';
 
 const cors = require('cors')
 const app = express();
@@ -43,5 +43,16 @@ app.post('/getUser', async (_, res) => {
   console.log('POST /getUser');
   res.status(200).send(await getUser(_));
 });
+
+app.post('/updateFavorite', async (_, res) => {
+  console.log('POST /updateFavorite');
+  //console.log(res);
+  await updateFavorite(_, res);
+});
+
+// app.post('/deleteFavorite', async (_, res) => {
+//   console.log('POST /deleteFavorite');
+//   res.status(204).send(await deleteFavorite(_));
+// });
 
 app.listen(port, () => console.log(`Running at http://localhost:${port}`));
