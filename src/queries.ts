@@ -17,6 +17,7 @@ const configuration = {
 /* Double check that you have the credential file! */
 const server = Knex(configuration);
 
+//Table Creation Queries
 const createArticlesTable = async () => {
   await server.raw('CREATE TABLE IF NOT EXISTS Articles (' +
       'article_id INT PRIMARY KEY, ' +
@@ -28,6 +29,25 @@ const createArticlesTable = async () => {
       ')');
 };
 
+const createAccountsTable = async () => {
+  await server.raw('CREATE TABLE IF NOT EXISTS Accounts (' +
+      'account_id INT PRIMARY KEY UNIQUE, ' +
+      'username VARCHAR ( 50 )' +
+      // 'email VARCHAR ( 50 ), ' +
+      // 'password VARCHAR ( 50 ), ' +
+      // 'creation_date DATE, ' +
+      ')');
+};
+
+const createFavoritesTable = async () => {
+  await server.raw('CREATE TABLE IF NOT EXISTS Favorites (' +
+      'article_id INT REFERENCES Articles (article_id) ON UPDATE CASCADE ON DELETE CASCADE, ' +
+      'account_id INT REFERENCES Accounts (account_id) ON UPDATE CASCADE, ' +
+      'CONSTRAINT favKey PRIMARY KEY (article_id, account_id)' +
+      ')');
+};
+
+//Article Queries
 const getAllArticles = async () => {
   console.log('@query getAllArticles');
   return server.select().table('articles');
@@ -48,4 +68,29 @@ const deleteArticle = async (req : any) => {
   return server('articles').where({article_id: req.body.article_id}).del();
 };
 
-export {createArticlesTable, getAllArticles, insertArticle, deleteArticle};
+//Login Queries
+const insertUser = async (req : any) => {
+  console.log('@query insertUser');
+  console.log(req.body)
+  console.log(req.body.account_id)
+  return server('accounts').insert({account_id: req.body.account_id});
+};
+
+const getUser = async (req : any) => {
+  console.log('@query getUser');
+  console.log(req.body)
+  console.log(req.body.account_id)
+  console.log(Number(req.body.account_id))
+  return server.table('accounts').where({account_id: req.body.account_id}).select();
+}
+
+//Favorite Queries
+// const insertFavorite = async (req : any) => {
+//   console.log('@query insertFavorite');
+//   console.log(req.body)
+//   console.log(req.body.article_id)
+//   console.log(req.body.account_id)
+//   //return server('accounts').insert({account_id: req.body.account_id});
+// };
+
+export {createArticlesTable, createAccountsTable, createFavoritesTable, getAllArticles, insertArticle, deleteArticle, insertUser, getUser};

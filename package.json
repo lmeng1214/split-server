@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Bipartisan News Viewer",
   "main": "dist/app.js",
+  "proxy": "http://localhost:3000/",
   "scripts": {
     "build": "tsc",
     "start": "tsc & node .",
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/lmeng1214/split-server#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.95.12",
     "pg": "^8.7.1"
