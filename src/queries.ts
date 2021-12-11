@@ -112,16 +112,16 @@ const updateFavorite = async (req : any, res : any) => {
         }
         return response
       })
-
-  //return server('favorites').insert({article_id: req.body.article_id, account_id: req.body.account_id});
 };
 
-// const deleteFavorite = async (req : any) => {
-//   console.log('@query deleteFavorite');
-//   console.log(req.body)
-//   console.log(req.body.article_id)
-//   console.log(req.body.account_id)
-//   //return server('favorites').where({article_id: req.body.article_id, account_id: req.body.account_id}).del();
-// };
+//Search Queries
+const getSortedArticles = async (req : any) => {
+  console.log('@query getGroupedArticles');
+  console.log(req.body)
+  console.log(req.body.name)
+  console.log(req.body.order)
+  return server.select().table('articles').orderBy(req.body.name, req.body.order);
+};
 
-export {createArticlesTable, createAccountsTable, createFavoritesTable, getAllArticles, insertArticle, deleteArticle, insertUser, getUser, updateFavorite};
+export {createArticlesTable, createAccountsTable, createFavoritesTable, getAllArticles, insertArticle,
+  deleteArticle, insertUser, getUser, updateFavorite, getSortedArticles};
