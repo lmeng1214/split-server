@@ -14,7 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const queries_1 = require("./queries");
+const cors = require('cors');
 const app = (0, express_1.default)();
+app.use(cors());
+app.options('*', cors()); // allows preflight for POST, PUT, DELETE
+app.use(express_1.default.json());
 const port = process.env.PORT || 8080;
 app.get('/', (_, res) => {
     res.status(200).send('OK!');
@@ -22,6 +26,14 @@ app.get('/', (_, res) => {
 app.get('/selectAll', (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('GET /selectAll');
     res.status(200).send(yield (0, queries_1.getAllArticles)());
+}));
+app.post('/insertArticle', (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('POST /insertArticle');
+    res.status(200).send(yield (0, queries_1.insertArticle)(_));
+}));
+app.post('/deleteArticle', (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('POST /deleteArticle');
+    res.status(204).send(yield (0, queries_1.deleteArticle)(_));
 }));
 app.listen(port, () => console.log(`Running at http://localhost:${port}`));
 //# sourceMappingURL=app.js.map

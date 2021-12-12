@@ -15,17 +15,18 @@ const configuration = {
 };
 
 /* Double check that you have the credential file! */
+// eslint-disable-next-line new-cap
 const server = Knex(configuration);
 
 const createArticlesTable = async () => {
-  await server.raw('CREATE TABLE IF NOT EXISTS Articles (' +
-      'article_id INT PRIMARY KEY, ' +
-      'source_id INT, ' +
-      'topic_id INT, ' +
-      'title VARCHAR ( 50 ), ' +
-      'url VARCHAR ( 255 ),' +
-      'pub_date TIMESTAMP' +
-      ')');
+  await server.raw('CREATE TABLE IF NOT EXISTS articles (' +
+        'article_id uuid PRIMARY KEY, ' +
+        'source_id VARCHAR, ' +
+        'topic_id INT, ' +
+        'title VARCHAR, ' +
+        'url VARCHAR,' +
+        'pub_date TIMESTAMP' +
+        ')');
 };
 
 const getAllArticles = async () => {
@@ -33,18 +34,25 @@ const getAllArticles = async () => {
   return server.select().table('articles');
 };
 
-const insertArticle = async (req : any) => {
-  var date = new Date();
+const insertArticle = async (req: any) => {
+  const date = new Date();
   console.log('@query insertArticle');
-  console.log(req.body)
-  return server('articles').insert({article_id: req.body.article_id, source_id: req.body.topic_id, topic_id: req.body.article_id, title: req.body.title, url: req.body.url, pub_date: date.toISOString()});
+  console.log(req.body);
+  return server('articles').insert({
+    article_id: req.body.article_id,
+    source_id: req.body.topic_id,
+    topic_id: req.body.article_id,
+    title: req.body.title,
+    url: req.body.url,
+    pub_date: date.toISOString(),
+  });
 };
 
-const deleteArticle = async (req : any) => {
+const deleteArticle = async (req: any) => {
   console.log('@query deleteArticle');
-  console.log(req.body)
-  console.log(req.body.article_id)
-  console.log(Number(req.body.article_id))
+  console.log(req.body);
+  console.log(req.body.article_id);
+  console.log(Number(req.body.article_id));
   return server('articles').where({article_id: req.body.article_id}).del();
 };
 

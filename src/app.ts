@@ -1,10 +1,10 @@
 import express from 'express';
 import {getAllArticles, insertArticle, deleteArticle} from './queries';
 
-const cors = require('cors')
+const cors = require('cors');
 const app = express();
-app.use(cors())
-app.options('*', cors()) // allows preflight for POST, PUT, DELETE
+app.use(cors());
+app.options('*', cors()); // allows preflight for POST, PUT, DELETE
 
 app.use(express.json());
 
