@@ -19,6 +19,9 @@ conn = psycopg2.connect(
 #     print(pubsub_message)
 
 def main():
+    #TODO Move this into hello_pubsub
+    #TODO remove print statements and optimize for space and time to avoid overcharging
+    
     get_articles()
     get_sources()
 
@@ -42,6 +45,7 @@ def get_articles():
     articles = response_json['articles']
 
     cursor.execute("""CREATE EXTENSION IF NOT EXISTS "uuid-ossp";""")
+    print('Article Trigger (get_articles) >> Adding UUID extension if not already added')
 
     cursor.execute("""CREATE TABLE IF NOT EXISTS articles(
                     article_id uuid DEFAULT uuid_generate_v4() PRIMARY KEY, 
@@ -50,6 +54,10 @@ def get_articles():
                     title VARCHAR(255), 
                     url VARCHAR(255), 
                     pub_date TIMESTAMP);""")
+    print('Article Trigger (get_articles) >> Creating articles table if not already created')
+
+    cursor.execute("""DELETE FROM articles;""")
+    print('Article Trigger (get_articles) >> Clearing out all rows to avoid duplicate articles')
 
     for article in articles:
         cursor.execute("INSERT INTO articles(source_id, topic_id, title, url, pub_date) VALUES (%s, %s, %s, %s, %s)",
@@ -83,6 +91,10 @@ def get_sources():
                     country VARCHAR(2),
                     bias INT, 
                     popularity INT);""")
+    print('Article Trigger (get_sources) >> Creating sources table if not already created')
+
+    cursor.execute("""DELETE FROM sources;""")
+    print('Article Trigger (get_sources) >> Clearing out all rows to avoid duplicate sources')
 
     for source in sources:
         cursor.execute("""INSERT INTO sources(source_id, name, homepage_url, country) VALUES (%s, %s, %s, %s)""",
