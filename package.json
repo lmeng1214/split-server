@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Bipartisan News Viewer",
   "main": "dist/app.js",
+  "proxy": "http://localhost:3000/",
   "scripts": {
     "build": "tsc",
     "start": "tsc & node .",
