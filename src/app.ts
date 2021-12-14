@@ -18,7 +18,7 @@ app.get('/', (_, res) => {
 createAccountsTable();
 createFavoritesTable();
 
-//Article Queries
+// Article Queries
 app.get('/selectAll', async (_, res) => {
   console.log('GET /selectAll');
   res.status(200).send(await getAllArticles());
@@ -34,7 +34,7 @@ app.post('/deleteArticle', async (_, res) => {
   res.status(204).send(await deleteArticle(_));
 });
 
-//Login Queries
+// Login Queries
 app.post('/insertUser', async (_, res) => {
   console.log('POST /insertUser');
   res.status(200).send(await insertUser(_));

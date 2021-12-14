@@ -18,18 +18,7 @@ const configuration = {
 // eslint-disable-next-line new-cap
 const server = Knex(configuration);
 
-//Table Creation Queries
-const createArticlesTable = async () => {
-  await server.raw('CREATE TABLE IF NOT EXISTS articles (' +
-        'article_id uuid PRIMARY KEY, ' +
-        'source_id VARCHAR, ' +
-        'topic_id INT, ' +
-        'title VARCHAR, ' +
-        'url VARCHAR,' +
-        'pub_date TIMESTAMP' +
-        ')');
-};
-
+// Table Creation Queries
 const createAccountsTable = async () => {
   await server.raw('CREATE TABLE IF NOT EXISTS Accounts (' +
       'account_id INT PRIMARY KEY UNIQUE, ' +
@@ -48,7 +37,7 @@ const createFavoritesTable = async () => {
       ')');
 };
 
-//Article Queries
+// Article Queries
 const getAllArticles = async () => {
   console.log('@query getAllArticles');
   return server.select().table('articles');
@@ -76,58 +65,56 @@ const deleteArticle = async (req: any) => {
   return server('articles').where({article_id: req.body.article_id}).del();
 };
 
-//Login Queries
+// Login Queries
 const insertUser = async (req : any) => {
   console.log('@query insertUser');
-  console.log(req.body)
-  console.log(req.body.account_id)
+  console.log(req.body);
+  console.log(req.body.account_id);
   return server('accounts').insert({account_id: req.body.account_id});
 };
 
 const getUser = async (req : any) => {
   console.log('@query getUser');
-  console.log(req.body)
-  console.log(req.body.account_id)
-  console.log(Number(req.body.account_id))
+  console.log(req.body);
+  console.log(req.body.account_id);
+  console.log(Number(req.body.account_id));
   return server.table('accounts').where({account_id: req.body.account_id}).select();
-}
+};
 
-function pick_row (rows : any)
-{
-  if (! rows.length) return null
+function pick_row(rows : any) {
+  if (! rows.length) return null;
   return rows[0];
 }
 
-//Favorite Queries
+// Favorite Queries
 const updateFavorite = async (req : any, res : any) => {
   console.log('@query updateFavorite');
-  console.log(req.body)
-  console.log(req.body.article_id)
-  console.log(req.body.account_id)
+  console.log(req.body);
+  console.log(req.body.article_id);
+  console.log(req.body.account_id);
 
   return server('favorites').select('*')
       .where({article_id: req.body.article_id, account_id: req.body.account_id})
-      .then(pick_row).then(result => {
-        console.log(result)
+      .then(pick_row).then((result) => {
+        console.log(result);
         let response;
-        if(result == null) {
+        if (result == null) {
           response = server('favorites').insert({article_id: req.body.article_id, account_id: req.body.account_id});
-          res.send("Inserted")
-        }
-        else {
+          res.send('Inserted');
+        } else {
           response = server('favorites').where({article_id: req.body.article_id, account_id: req.body.account_id}).del();
-          res.send("Deleted")
+          res.send('Deleted');
         }
-        return response
-      })
+        return response;
+      });
 };
 
-//Search Queries
+// Search Queries
 const getSortedArticles = async (req : any) => {
   console.log('@query getGroupedArticles');
-  console.log(req.body)
-  console.log(req.body.name)
-  console.log(req.body.order)
+  console.log(req.body);
+  console.log(req.body.name);
+  console.log(req.body.order);
   return server.select().table('articles').orderBy(req.body.name, req.body.order);
 };
 
