@@ -1,6 +1,16 @@
 import express from 'express';
-import {createAccountsTable, createFavoritesTable, getAllArticles, insertArticle, deleteArticle,
-  insertUser, getUser, updateFavorite, getSortedArticles} from './queries';
+
+import {
+  createAccountsTable,
+  createFavoritesTable,
+  getArticles,
+  insertArticle,
+  deleteArticle,
+  insertUser,
+  getUser,
+  updateFavorite,
+  getSortedArticles,
+} from './queries';
 
 const cors = require('cors');
 const app = express();
@@ -11,17 +21,14 @@ app.use(express.json());
 
 const port = process.env.PORT || 8080;
 
-app.get('/', (_, res) => {
-  res.status(200).send('OK!');
-});
-
 createAccountsTable();
 createFavoritesTable();
 
 // Article Queries
-app.get('/selectAll', async (_, res) => {
-  console.log('GET /selectAll');
-  res.status(200).send(await getAllArticles());
+app.get('/', async (_, res) => {
+  /* Homepage Query */
+  console.log('GET /');
+  res.status(200).send(await getArticles());
 });
 
 app.post('/insertArticle', async (_, res) => {

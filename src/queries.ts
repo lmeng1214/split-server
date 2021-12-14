@@ -38,8 +38,8 @@ const createFavoritesTable = async () => {
 };
 
 // Article Queries
-const getAllArticles = async () => {
-  console.log('@query getAllArticles');
+const getArticles = async () => {
+  console.log('@query getArticles');
   return server.select().table('articles');
 };
 
@@ -118,5 +118,14 @@ const getSortedArticles = async (req : any) => {
   return server.select().table('articles').orderBy(req.body.name, req.body.order);
 };
 
-export {createArticlesTable, createAccountsTable, createFavoritesTable, getAllArticles, insertArticle,
-  deleteArticle, insertUser, getUser, updateFavorite, getSortedArticles};
+export {
+  createAccountsTable,
+  createFavoritesTable,
+  getArticles,
+  insertArticle,
+  deleteArticle,
+  insertUser,
+  getUser,
+  updateFavorite,
+  getSortedArticles,
+};
