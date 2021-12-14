@@ -21,7 +21,7 @@ conn = psycopg2.connect(
 def main():
     #TODO Move this into hello_pubsub
     #TODO remove print statements and optimize for space and time to avoid overcharging
-    
+
     get_articles()
     get_sources()
 
