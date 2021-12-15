@@ -10,6 +10,7 @@ import {
   getUser,
   updateFavorite,
   getSortedArticles,
+  getArticleByWord
 } from './queries';
 
 const cors = require('cors');
@@ -60,6 +61,11 @@ app.post('/updateFavorite', async (_, res) => {
 app.post('/search', async (_, res) => {
   console.log('POST getSortedArticles');
   res.status(200).send(await getSortedArticles(_));
+});
+
+app.post('/getByKeyword', async (_, res) => {
+  console.log('POST getByKeyword');
+  res.status(200).send(await getArticleByWord(_));
 });
 
 app.listen(port, () => console.log(`Running at http://localhost:${port}`));

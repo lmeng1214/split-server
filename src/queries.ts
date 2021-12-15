@@ -30,10 +30,10 @@ const createAccountsTable = async () => {
 };
 
 const createFavoritesTable = async () => {
-  await server.raw('CREATE TABLE IF NOT EXISTS Favorites (' +
-      'article_id INT REFERENCES Articles (article_id) ON UPDATE CASCADE ON DELETE CASCADE, ' +
+  await server.raw('CREATE TABLE IF NOT EXISTS Favorites2 (' +
+      'article_id uuid REFERENCES Articles (article_id) ON UPDATE CASCADE ON DELETE CASCADE, ' +
       'account_id INT REFERENCES Accounts (account_id) ON UPDATE CASCADE, ' +
-      'CONSTRAINT favKey PRIMARY KEY (article_id, account_id)' +
+      'CONSTRAINT favKey2 PRIMARY KEY (article_id, account_id)' +
       ')');
 };
 
@@ -93,16 +93,16 @@ const updateFavorite = async (req : any, res : any) => {
   console.log(req.body.article_id);
   console.log(req.body.account_id);
 
-  return server('favorites').select('*')
+  return server('favorites2').select('*')
       .where({article_id: req.body.article_id, account_id: req.body.account_id})
       .then(pick_row).then((result) => {
         console.log(result);
         let response;
         if (result == null) {
-          response = server('favorites').insert({article_id: req.body.article_id, account_id: req.body.account_id});
+          response = server('favorites2').insert({article_id: req.body.article_id, account_id: req.body.account_id});
           res.send('Inserted');
         } else {
-          response = server('favorites').where({article_id: req.body.article_id, account_id: req.body.account_id}).del();
+          response = server('favorites2').where({article_id: req.body.article_id, account_id: req.body.account_id}).del();
           res.send('Deleted');
         }
         return response;
@@ -118,6 +118,13 @@ const getSortedArticles = async (req : any) => {
   return server.select().table('articles').orderBy(req.body.name, req.body.order);
 };
 
+const getArticleByWord = async (req : any) => {
+  console.log('@query getArticleByWord');
+  console.log(req.body);
+  console.log(req.body.word);
+  return server.select().table('articles').where('title', 'like', req.body.word).orderBy('topic_id');
+};
+
 export {
   createAccountsTable,
   createFavoritesTable,
@@ -128,4 +135,5 @@ export {
   getUser,
   updateFavorite,
   getSortedArticles,
+  getArticleByWord
 };
