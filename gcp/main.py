@@ -30,6 +30,8 @@ def main():
 def get_articles():
     print('Article Trigger (get_articles) >> Getting Articles')
 
+    # Read Uncommitted isolation level because no selections are done
+    conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_READ_UNCOMMITTED)
     cursor = conn.cursor()
 
     response = requests.get('https://newsapi.org/v2/top-headlines?country=us&apiKey=1bc453697e0d401cb916ebef3bad313f')
@@ -77,6 +79,8 @@ def get_articles():
 def get_sources():
     print('Article Trigger (get_sources) >> Getting Sources')
 
+    # Read Uncommitted isolation level because no selections are done
+    conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_READ_UNCOMMITTED)
     cursor = conn.cursor()
 
     response = requests.get('https://newsapi.org/v2/top-headlines/sources?apiKey=1bc453697e0d401cb916ebef3bad313f')
