@@ -10,7 +10,7 @@ import {
   getUser,
   updateFavorite,
   getSortedArticles,
-  getArticleByWord
+  getArticleByWord, createSearchStatement, getNumTopics,
 } from './queries';
 
 const cors = require('cors');
@@ -25,7 +25,13 @@ const port = process.env.PORT || 8080;
 createAccountsTable();
 createFavoritesTable();
 
+createSearchStatement();
+
 // Article Queries
+app.get('/numTopics', async (_, res) => {
+  res.status(200).send(await getNumTopics(_));
+});
+
 app.get('/', async (_, res) => {
   /* Homepage Query */
   console.log('GET /');

@@ -23,7 +23,7 @@ def main():
     #TODO remove print statements and optimize for space and time to avoid overcharging
 
     get_articles()
-    get_sources()
+    #get_sources()
 
     conn.close()
 
@@ -53,16 +53,22 @@ def get_articles():
                     topic_id INT, 
                     title VARCHAR(255), 
                     url VARCHAR(255), 
+                    image VARCHAR(255),
                     pub_date TIMESTAMP);""")
     print('Article Trigger (get_articles) >> Creating articles table if not already created')
 
     cursor.execute("""DELETE FROM articles;""")
     print('Article Trigger (get_articles) >> Clearing out all rows to avoid duplicate articles')
 
-    for article in articles:
-        cursor.execute("INSERT INTO articles(source_id, topic_id, title, url, pub_date) VALUES (%s, %s, %s, %s, %s)",
-                       (article['source']['id'], 0, article['title'], article['url'], article['publishedAt']))
-        print('Article Trigger (get_articles) >> Adding', ('unique uuid', article['source']['id'], 0, article['title'], article['url'], article['publishedAt']))
+    for idx, article in enumerate(articles):
+        cursor.execute("INSERT INTO articles(source_id, topic_id, title, url, image, pub_date) VALUES (%s, %s, %s, %s, %s, %s)",
+                       (article['source']['id'],
+                        idx % (len(articles) / 3),
+                        (None, article['title'])[len(article['title']) <= 255],
+                        (None, article['url'])[len(article['url']) <= 255],
+                        (None, article['urlToImage'])[len(article['urlToImage']) <= 255],
+                        article['publishedAt']))
+        print('Article Trigger (get_articles) >> Adding', ('unique uuid', article['source']['id'], idx % (len(articles) / 3), article['title'], article['url'], article['urlToImage'], article['publishedAt']))
 
     conn.commit()
 

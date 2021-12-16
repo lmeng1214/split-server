@@ -31,16 +31,25 @@ const createAccountsTable = async () => {
 
 const createFavoritesTable = async () => {
   await server.raw('CREATE TABLE IF NOT EXISTS Favorites2 (' +
-      'article_id uuid REFERENCES Articles (article_id) ON UPDATE CASCADE ON DELETE CASCADE, ' +
+      'article_id uuid REFERENCES Articles (article_id) ' +
+      'ON UPDATE CASCADE ON DELETE CASCADE, ' +
       'account_id INT REFERENCES Accounts (account_id) ON UPDATE CASCADE, ' +
       'CONSTRAINT favKey2 PRIMARY KEY (article_id, account_id)' +
       ')');
 };
 
+// Prepared Statement Creation
+const createSearchStatement = async () => {
+  await server.raw('PREPARE search_articles(text) AS ' +
+      'SELECT * FROM articles LEFT OUTER JOIN sources ' +
+      'ON articles.source_id = sources.source_id ' +
+      'WHERE articles.title ILIKE \'%\' || $1 || \'%\';');
+};
+
 // Article Queries
 const getArticles = async () => {
   console.log('@query getArticles');
-  return server.select().table('articles');
+  return server('articles').leftOuterJoin('sources', 'articles.source_id', 'sources.source_id');
 };
 
 const insertArticle = async (req: any) => {
@@ -120,14 +129,19 @@ const getSortedArticles = async (req : any) => {
 
 const getArticleByWord = async (req : any) => {
   console.log('@query getArticleByWord');
-  console.log(req.body);
   console.log(req.body.word);
-  return server.select().table('articles').where('title', 'like', req.body.word).orderBy('topic_id');
+
+  return server.raw('EXECUTE search_articles(\'' + req.body.word + '\');');
+};
+
+const getNumTopics = async (req:any) => {
+  return server.raw('SELECT count(DISTINCT articles.topic_id) FROM articles;');
 };
 
 export {
   createAccountsTable,
   createFavoritesTable,
+  createSearchStatement,
   getArticles,
   insertArticle,
   deleteArticle,
@@ -135,5 +149,6 @@ export {
   getUser,
   updateFavorite,
   getSortedArticles,
-  getArticleByWord
+  getArticleByWord,
+  getNumTopics,
 };
