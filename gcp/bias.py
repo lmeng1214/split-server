@@ -39,7 +39,8 @@ def main():
     conn.close()
 
 def get_bias():
-
+    # Read Committed isolation level because sources are not expected to change often
+    conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_READ_COMMITTED)
     cursor = conn.cursor()
 
     cursor.execute("""SELECT source_id, name FROM sources WHERE bias IS NULL;""")
